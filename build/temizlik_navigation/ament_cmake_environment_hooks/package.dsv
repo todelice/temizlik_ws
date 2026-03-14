@@ -1,0 +1,4 @@
+source;share/temizlik_navigation/local_setup.bash
+source;share/temizlik_navigation/local_setup.dsv
+source;share/temizlik_navigation/local_setup.sh
+source;share/temizlik_navigation/local_setup.zsh

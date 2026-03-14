@@ -1,0 +1,20 @@
+opennav_coverage_waypoint_node:
+  ros__parameters:
+    frame_id: map
+    action_name: /follow_waypoints
+    auto_start: false
+    waypoint_spacing: 0.25
+
+    # Coverage area. Must be a closed polygon ring.
+    field_wkt: "POLYGON((-1.47 1.53, 1.66 1.35, 1.68 -1.68, -1.61 -1.56, -1.47 1.53))"
+
+    # Additional no-go regions as inner rings (holes) for opennav_coverage.
+    # exclude_wkts:
+    #   - "POLYGON((0.2 0.2, 0.6 0.2, 0.6 -0.2, 0.2 -0.2, 0.2 0.2))"
+    exclude_wkts: []
+
+    use_gml_file: false
+    gml_field: ""
+    generate_headland: true
+    generate_route: true
+    generate_path: true

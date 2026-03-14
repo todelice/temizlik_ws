@@ -1,0 +1,92 @@
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_smoke_test.cpp:[m[K In function ‘[01m[Kint[01;32m[K main[m[K()[m[K’:
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_smoke_test.cpp:7:36:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Kf2c::types::Robot::Robot(double, double, double, double)[m[K’
+    7 |   F2CRobot robot(0.4, 0.4, 1.0, 0.3[01;31m[K)[m[K;
+      |                                    [01;31m[K^[m[K
+In file included from [01m[K/home/ws/install/fields2cover/include/fields2cover/types.h:31[m[K,
+                 from [01m[K/home/ws/install/fields2cover/include/fields2cover.h:11[m[K,
+                 from [01m[K/home/ws/src/temizlik_navigation/src/f2c_smoke_test.cpp:4[m[K:
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:51:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kconstexpr f2c::types::Robot::[01;32m[KRobot[m[K(f2c::types::Robot&&)[m[K’
+   51 |   [01;36m[KRobot[m[K(Robot &&) = default;
+      |   [01;36m[K^~~~~[m[K
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:51:3:[m[K [01;36m[Knote: [m[K  candidate expects 1 argument, 4 provided
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:50:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kconstexpr f2c::types::Robot::[01;32m[KRobot[m[K(const f2c::types::Robot&)[m[K’
+   50 |   [01;36m[KRobot[m[K(const Robot&) = default;
+      |   [01;36m[K^~~~~[m[K
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:50:3:[m[K [01;36m[Knote: [m[K  candidate expects 1 argument, 4 provided
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:48:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kconstexpr f2c::types::Robot::[01;32m[KRobot[m[K()[m[K’
+   48 |   [01;36m[KRobot[m[K() = default;
+      |   [01;36m[K^~~~~[m[K
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:48:3:[m[K [01;36m[Knote: [m[K  candidate expects 0 arguments, 4 provided
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:37:12:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kf2c::types::Robot::[01;32m[KRobot[m[K(double, double)[m[K’
+   37 |   explicit [01;36m[KRobot[m[K(
+      |            [01;36m[K^~~~~[m[K
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:37:12:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 4 provided
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_smoke_test.cpp:12:8:[m[K [01;31m[Kerror: [m[K‘[01m[KOptions[m[K’ is not a member of ‘[01m[Kf2c[m[K’
+   12 |   f2c::[01;31m[KOptions[m[K options;
+      |        [01;31m[K^~~~~~~[m[K
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_smoke_test.cpp:13:3:[m[K [01;31m[Kerror: [m[K‘[01m[Koptions[m[K’ was not declared in this scope; did you mean ‘[01m[Koptind[m[K’?
+   13 |   [01;31m[Koptions[m[K.pp_alg = f2c::PPAlg::DUBINS;
+      |   [01;31m[K^~~~~~~[m[K
+      |   [32m[Koptind[m[K
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_smoke_test.cpp:13:25:[m[K [01;31m[Kerror: [m[K‘[01m[Kf2c::PPAlg[m[K’ has not been declared
+   13 |   options.pp_alg = f2c::[01;31m[KPPAlg[m[K::DUBINS;
+      |                         [01;31m[K^~~~~[m[K
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_smoke_test.cpp:15:23:[m[K [01;31m[Kerror: [m[K‘[01m[KplanCovPath[m[K’ is not a member of ‘[01m[Kf2c[m[K’
+   15 |   F2CPath path = f2c::[01;31m[KplanCovPath[m[K(robot, cell, options);
+      |                       [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_smoke_test.cpp:17:28:[m[K [01;31m[Kerror: [m[K‘[01m[Kusing F2CCell = struct f2c::types::Cell[m[K’ {aka ‘[01m[Kstruct f2c::types::Cell[m[K’} has no member named ‘[01m[Karea[m[K’
+   17 |   const double area = cell.[01;31m[Karea[m[K();
+      |                            [01;31m[K^~~~[m[K
+gmake[2]: *** [CMakeFiles/f2c_smoke_test.dir/build.make:76: CMakeFiles/f2c_smoke_test.dir/src/f2c_smoke_test.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:139: CMakeFiles/f2c_smoke_test.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_nav2_waypoint_node.cpp:83:8:[m[K [01;31m[Kerror: [m[K‘[01m[KPPAlg[m[K’ in namespace ‘[01m[Kf2c[m[K’ does not name a type
+   83 |   f2c::[01;31m[KPPAlg[m[K parse_pp_alg(const std::string &alg_name) {
+      |        [01;31m[K^~~~~[m[K
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_nav2_waypoint_node.cpp:[m[K In member function ‘[01m[Kvoid F2CNav2WaypointNode::[01;32m[Kgenerate_waypoints[m[K()[m[K’:
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_nav2_waypoint_node.cpp:152:76:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Kf2c::types::Robot::Robot(double&, double&, double&, double&)[m[K’
+  152 |     F2CRobot robot(robot_width_, coverage_width_, max_curv_, max_diff_curv_[01;31m[K)[m[K;
+      |                                                                            [01;31m[K^[m[K
+In file included from [01m[K/home/ws/install/fields2cover/include/fields2cover/types.h:31[m[K,
+                 from [01m[K/home/ws/install/fields2cover/include/fields2cover.h:11[m[K,
+                 from [01m[K/home/ws/src/temizlik_navigation/src/f2c_nav2_waypoint_node.cpp:8[m[K:
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:51:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kconstexpr f2c::types::Robot::[01;32m[KRobot[m[K(f2c::types::Robot&&)[m[K’
+   51 |   [01;36m[KRobot[m[K(Robot &&) = default;
+      |   [01;36m[K^~~~~[m[K
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:51:3:[m[K [01;36m[Knote: [m[K  candidate expects 1 argument, 4 provided
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:50:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kconstexpr f2c::types::Robot::[01;32m[KRobot[m[K(const f2c::types::Robot&)[m[K’
+   50 |   [01;36m[KRobot[m[K(const Robot&) = default;
+      |   [01;36m[K^~~~~[m[K
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:50:3:[m[K [01;36m[Knote: [m[K  candidate expects 1 argument, 4 provided
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:48:3:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kconstexpr f2c::types::Robot::[01;32m[KRobot[m[K()[m[K’
+   48 |   [01;36m[KRobot[m[K() = default;
+      |   [01;36m[K^~~~~[m[K
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:48:3:[m[K [01;36m[Knote: [m[K  candidate expects 0 arguments, 4 provided
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:37:12:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kf2c::types::Robot::[01;32m[KRobot[m[K(double, double)[m[K’
+   37 |   explicit [01;36m[KRobot[m[K(
+      |            [01;36m[K^~~~~[m[K
+[01m[K/home/ws/install/fields2cover/include/fields2cover/types/Robot.h:37:12:[m[K [01;36m[Knote: [m[K  candidate expects 2 arguments, 4 provided
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_nav2_waypoint_node.cpp:170:43:[m[K [01;31m[Kerror: [m[K‘[01m[Kusing F2CCells = struct f2c::types::Cells[m[K’ {aka ‘[01m[Kstruct f2c::types::Cells[m[K’} has no member named ‘[01m[Kdifference[m[K’; did you mean ‘[01m[KDifference[m[K’?
+  170 |       const auto diff_cells = work_cells_.[01;31m[Kdifference[m[K(ex_cell);
+      |                                           [01;31m[K^~~~~~~~~~[m[K
+      |                                           [32m[KDifference[m[K
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_nav2_waypoint_node.cpp:180:10:[m[K [01;31m[Kerror: [m[K‘[01m[KOptions[m[K’ is not a member of ‘[01m[Kf2c[m[K’
+  180 |     f2c::[01;31m[KOptions[m[K options;
+      |          [01;31m[K^~~~~~~[m[K
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_nav2_waypoint_node.cpp:181:5:[m[K [01;31m[Kerror: [m[K‘[01m[Koptions[m[K’ was not declared in this scope; did you mean ‘[01m[Koptind[m[K’?
+  181 |     [01;31m[Koptions[m[K.pp_alg = parse_pp_alg(pp_alg_);
+      |     [01;31m[K^~~~~~~[m[K
+      |     [32m[Koptind[m[K
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_nav2_waypoint_node.cpp:181:22:[m[K [01;31m[Kerror: [m[K‘[01m[Kparse_pp_alg[m[K’ was not declared in this scope
+  181 |     options.pp_alg = [01;31m[Kparse_pp_alg[m[K(pp_alg_);
+      |                      [01;31m[K^~~~~~~~~~~~[m[K
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_nav2_waypoint_node.cpp:183:31:[m[K [01;31m[Kerror: [m[K‘[01m[KplanCovPath[m[K’ is not a member of ‘[01m[Kf2c[m[K’
+  183 |     const F2CPath path = f2c::[01;31m[KplanCovPath[m[K(robot, field_cell_, options);
+      |                               [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/ws/src/temizlik_navigation/src/f2c_nav2_waypoint_node.cpp:197:35:[m[K [01;31m[Kerror: [m[K‘[01m[Kconst F2CPath[m[K’ {aka ‘[01m[Kconst struct f2c::types::Path[m[K’} has no member named ‘[01m[KgetStates[m[K’; did you mean ‘[01m[Kstates[m[K’?
+  197 |     for (const auto &state : path.[01;31m[KgetStates[m[K()) {
+      |                                   [01;31m[K^~~~~~~~~[m[K
+      |                                   [32m[Kstates[m[K
+gmake[2]: *** [CMakeFiles/f2c_nav2_waypoint_node.dir/build.make:76: CMakeFiles/f2c_nav2_waypoint_node.dir/src/f2c_nav2_waypoint_node.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:165: CMakeFiles/f2c_nav2_waypoint_node.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

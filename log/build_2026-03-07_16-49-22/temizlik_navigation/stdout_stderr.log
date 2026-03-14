@@ -1,0 +1,57 @@
+-- Found ament_cmake: 2.5.5 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Found rclcpp: 28.1.16 (/opt/ros/jazzy/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+-- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found rclcpp_action: 28.1.16 (/opt/ros/jazzy/share/rclcpp_action/cmake)
+-- Found geometry_msgs: 5.3.6 (/opt/ros/jazzy/share/geometry_msgs/cmake)
+-- Found nav_msgs: 5.3.6 (/opt/ros/jazzy/share/nav_msgs/cmake)
+-- Found nav2_msgs: 1.3.10 (/opt/ros/jazzy/share/nav2_msgs/cmake)
+-- Found std_srvs: 5.3.6 (/opt/ros/jazzy/share/std_srvs/cmake)
+-- Found visualization_msgs: 5.3.6 (/opt/ros/jazzy/share/visualization_msgs/cmake)
+-- Configuring done (0.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/ws/build/temizlik_navigation
+[ 50%] Built target f2c_smoke_test
+[100%] Built target f2c_nav2_waypoint_node
+-- Install configuration: ""
+-- Up-to-date: /home/ws/install/temizlik_navigation/lib/temizlik_navigation/f2c_smoke_test
+-- Up-to-date: /home/ws/install/temizlik_navigation/lib/temizlik_navigation/f2c_nav2_waypoint_node
+-- Installing: /home/ws/install/temizlik_navigation/lib/temizlik_navigation/opennav_coverage_waypoint_node.py
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch/turtlebot3_nav2.launch.py
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch/turtlebot3_f2c_nav2.launch.py
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch/turtlebot3_nav2_coverage_server.launch.py
+-- Installing: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch/turtlebot3_opennav_coverage_drive.launch.py
+-- Installing: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch/turtlebot3_opennav_coverage_bt.launch.py
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch/__pycache__
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch/__pycache__/turtlebot3_gazebo_nav2.launch.cpython-310.pyc
+-- Installing: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch/__pycache__/turtlebot3_opennav_coverage_bt.launch.cpython-310.pyc
+-- Installing: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch/__pycache__/turtlebot3_nav2_coverage_server.launch.cpython-310.pyc
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch/__pycache__/turtlebot3_nav2.launch.cpython-310.pyc
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch/__pycache__/turtlebot3_f2c_nav2.launch.cpython-310.pyc
+-- Installing: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch/__pycache__/turtlebot3_opennav_coverage_drive.launch.cpython-310.pyc
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/launch/turtlebot3_gazebo_nav2.launch.py
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/config
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/config/f2c_nav2_params.yaml
+-- Installing: /home/ws/install/temizlik_navigation/share/temizlik_navigation/config/opennav_coverage_nav2_params.yaml
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/config/nav2_coverage_server_params.yaml
+-- Installing: /home/ws/install/temizlik_navigation/share/ament_index/resource_index/package_run_dependencies/temizlik_navigation
+-- Installing: /home/ws/install/temizlik_navigation/share/ament_index/resource_index/parent_prefix_path/temizlik_navigation
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/environment/ament_prefix_path.sh
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/environment/path.sh
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/environment/path.dsv
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/local_setup.bash
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/local_setup.sh
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/local_setup.zsh
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/local_setup.dsv
+-- Installing: /home/ws/install/temizlik_navigation/share/temizlik_navigation/package.dsv
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/ament_index/resource_index/packages/temizlik_navigation
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/cmake/temizlik_navigationConfig.cmake
+-- Up-to-date: /home/ws/install/temizlik_navigation/share/temizlik_navigation/cmake/temizlik_navigationConfig-version.cmake
+-- Installing: /home/ws/install/temizlik_navigation/share/temizlik_navigation/package.xml
