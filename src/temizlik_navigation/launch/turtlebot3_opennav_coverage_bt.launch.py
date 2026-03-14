@@ -76,7 +76,7 @@ def _prepare_bt_params(context, *args, **kwargs):
         os.path.join(
             get_package_share_directory('opennav_coverage_bt'),
             'behavior_trees',
-            'navigate_w_basic_complete_coverage.xml',
+            'navigate_w_basic_complete_coverage_nav_to_start.xml',
         ),
     )
 
