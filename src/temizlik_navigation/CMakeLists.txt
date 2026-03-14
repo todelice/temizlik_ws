@@ -58,12 +58,14 @@ install(
 
 install(
   PROGRAMS
+    scripts/gazebo_ground_truth_tf.py
+    scripts/initial_pose_publisher.py
     scripts/opennav_coverage_waypoint_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
 install(
-  DIRECTORY launch config
+  DIRECTORY launch config models
   DESTINATION share/${PROJECT_NAME}
 )
 

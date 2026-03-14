@@ -27,6 +27,29 @@ ros2 launch temizlik_navigation turtlebot3_nav2.launch.py
 ros2 launch temizlik_navigation turtlebot3_gazebo_nav2.launch.py
 ```
 
+This launch now defaults to the AWS RoboMaker small warehouse world and its matching map.
+It also delays Nav2 startup until the robot and bridges are up, then auto-publishes
+an initial pose after both `/odom` and `/scan` are available.
+
+Override spawn position if needed:
+
+```bash
+ros2 launch temizlik_navigation turtlebot3_gazebo_nav2.launch.py x_pose:=0.5 y_pose:=0.5
+```
+
+If you override `x_pose`, `y_pose`, or `yaw`, the initial pose publisher will use the same
+values. For the warehouse world, arbitrary spawn overrides may not match the occupancy map,
+so prefer the default spawn unless you have verified the map coordinates.
+If the robot appears to start intersecting the floor, increase `z_pose` from its default
+`0.12`.
+
+Override the world explicitly:
+
+```bash
+ros2 launch temizlik_navigation turtlebot3_gazebo_nav2.launch.py \
+  world:=/home/ws/src/aws_robomaker_small_warehouse_world/worlds/small_warehouse/small_warehouse.world
+```
+
 ## Launch TurtleBot3 + Nav2 + Fields2Cover coverage
 
 ```bash
@@ -87,6 +110,10 @@ ros2 service call /start_coverage std_srvs/srv/Trigger {}
 ## Launch TurtleBot3 + Nav2 + Coverage BT Navigator (Recommended)
 
 This launch enables the `navigate_complete_coverage` BT navigator plugin and drives the robot directly via Behavior Tree execution.
+For the AWS warehouse world it also merges warehouse-specific Nav2 overrides for
+AMCL, costmaps, and controller behavior from `config/warehouse_nav2_overrides.yaml`.
+If you do not need realistic localization in simulation, set
+`use_ground_truth_localization:=true` to bypass AMCL TF and use `map == odom`.
 
 ```bash
 ros2 launch temizlik_navigation turtlebot3_opennav_coverage_bt.launch.py

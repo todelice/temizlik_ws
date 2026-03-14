@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/f2c_smoke_test.dir/src/f2c_smoke_test.cpp.o -o f2c_smoke_test  -Wl,-rpath,/home/ws/install/fields2cover/lib: /home/ws/install/fields2cover/lib/libFields2Cover.so /usr/lib/x86_64-linux-gnu/libgdal.so -lpthread -lgeos_c -Wl,-rpath-link,/home/ws/install/fields2cover/lib 

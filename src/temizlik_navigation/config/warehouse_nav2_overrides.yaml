@@ -1,0 +1,160 @@
+amcl:
+  ros__parameters:
+    use_sim_time: true
+    tf_broadcast: true
+    global_frame_id: map
+    odom_frame_id: odom
+    base_frame_id: base_link
+    laser_model_type: likelihood_field
+    max_beams: 120
+    min_particles: 1000
+    max_particles: 3000
+    sigma_hit: 0.12
+    z_hit: 0.9
+    z_short: 0.03
+    z_max: 0.02
+    z_rand: 0.05
+    lambda_short: 0.1
+    update_min_d: 0.05
+    update_min_a: 0.05
+    resample_interval: 1
+    transform_tolerance: 1.0
+    laser_max_range: 3.5
+    laser_max_beams: 120
+    set_initial_pose: false
+
+bt_navigator:
+  ros__parameters:
+    use_sim_time: true
+    global_frame: map
+    robot_base_frame: base_link
+    odom_topic: /odom
+
+controller_server:
+  ros__parameters:
+    use_sim_time: true
+    controller_frequency: 15.0
+    min_x_velocity_threshold: 0.001
+    min_y_velocity_threshold: 0.0
+    min_theta_velocity_threshold: 0.001
+    failure_tolerance: 1.0
+    progress_checker_plugin: progress_checker
+    goal_checker_plugins: ["goal_checker"]
+    progress_checker:
+      plugin: nav2_controller::SimpleProgressChecker
+      required_movement_radius: 0.05
+      movement_time_allowance: 30.0
+    goal_checker:
+      plugin: nav2_controller::SimpleGoalChecker
+      stateful: true
+      xy_goal_tolerance: 0.25
+      yaw_goal_tolerance: 0.35
+    FollowPath:
+      min_vel_x: 0.0
+      max_vel_x: 0.12
+      max_vel_theta: 0.45
+      min_speed_xy: 0.0
+      max_speed_xy: 0.12
+      min_speed_theta: 0.0
+      acc_lim_x: 0.5
+      acc_lim_theta: 0.8
+      decel_lim_x: -0.5
+      decel_lim_theta: -0.8
+      sim_time: 2.0
+      vx_samples: 12
+      vtheta_samples: 30
+      transform_tolerance: 0.6
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      use_sim_time: true
+      update_frequency: 8.0
+      publish_frequency: 4.0
+      transform_tolerance: 0.5
+      width: 4
+      height: 4
+      resolution: 0.05
+      robot_base_frame: base_link
+      global_frame: odom
+      rolling_window: true
+      always_send_full_costmap: true
+      obstacle_layer:
+        observation_sources: scan
+        scan:
+          topic: /scan
+          data_type: LaserScan
+          marking: true
+          clearing: true
+          obstacle_max_range: 2.5
+          raytrace_max_range: 3.0
+      voxel_layer:
+        observation_sources: scan
+        scan:
+          topic: /scan
+          data_type: LaserScan
+          marking: true
+          clearing: true
+          obstacle_max_range: 2.5
+          raytrace_max_range: 3.0
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      use_sim_time: true
+      update_frequency: 2.0
+      publish_frequency: 1.0
+      transform_tolerance: 0.8
+      robot_base_frame: base_link
+      global_frame: map
+      track_unknown_space: true
+      always_send_full_costmap: true
+      obstacle_layer:
+        observation_sources: scan
+        scan:
+          topic: /scan
+          data_type: LaserScan
+          marking: true
+          clearing: true
+          obstacle_max_range: 2.5
+          raytrace_max_range: 3.0
+      voxel_layer:
+        observation_sources: scan
+        scan:
+          topic: /scan
+          data_type: LaserScan
+          marking: true
+          clearing: true
+          obstacle_max_range: 2.5
+          raytrace_max_range: 3.0
+
+planner_server:
+  ros__parameters:
+    use_sim_time: true
+    expected_planner_frequency: 5.0
+
+behavior_server:
+  ros__parameters:
+    use_sim_time: true
+    local_frame: odom
+    global_frame: map
+    robot_base_frame: base_link
+    transform_tolerance: 0.8
+
+velocity_smoother:
+  ros__parameters:
+    use_sim_time: true
+    smoothing_frequency: 15.0
+    max_velocity: [0.12, 0.0, 0.45]
+    min_velocity: [-0.12, 0.0, -0.45]
+    max_accel: [0.5, 0.0, 0.8]
+    max_decel: [-0.5, 0.0, -0.8]
+    odom_topic: odom
+
+waypoint_follower:
+  ros__parameters:
+    use_sim_time: true
+
+robot_state_publisher:
+  ros__parameters:
+    use_sim_time: true

@@ -59,8 +59,9 @@ def generate_launch_description():
         DeclareLaunchArgument(
             'map',
             default_value=PathJoinSubstitution([
-                FindPackageShare('turtlebot3_navigation2'),
-                'map',
+                FindPackageShare('aws_robomaker_small_warehouse_world'),
+                'maps',
+                '005',
                 'map.yaml'
             ])
         ),

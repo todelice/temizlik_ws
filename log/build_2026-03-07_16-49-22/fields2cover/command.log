@@ -1,4 +1,0 @@
-Invoking command in '/home/ws/build/fields2cover': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ws/install/opennav_coverage_demo:/opt/ros/jazzy /usr/bin/cmake --build /home/ws/build/fields2cover -- -j12 -l12
-Invoked command in '/home/ws/build/fields2cover' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ws/install/opennav_coverage_demo:/opt/ros/jazzy /usr/bin/cmake --build /home/ws/build/fields2cover -- -j12 -l12
-Invoking command in '/home/ws/build/fields2cover': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ws/install/opennav_coverage_demo:/opt/ros/jazzy /usr/bin/cmake --install /home/ws/build/fields2cover
-Invoked command in '/home/ws/build/fields2cover' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ws/install/opennav_coverage_demo:/opt/ros/jazzy /usr/bin/cmake --install /home/ws/build/fields2cover

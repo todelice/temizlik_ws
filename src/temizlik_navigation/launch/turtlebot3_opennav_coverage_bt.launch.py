@@ -12,12 +12,38 @@ from launch_ros.substitutions import FindPackageShare
 import yaml
 
 
+def _deep_merge_dicts(base, override):
+    for key, value in (override or {}).items():
+        if isinstance(value, dict) and isinstance(base.get(key), dict):
+            _deep_merge_dicts(base[key], value)
+        else:
+            base[key] = value
+    return base
+
+
 def _prepare_bt_params(context, *args, **kwargs):
     del args, kwargs
     src_params = LaunchConfiguration('nav2_params_file').perform(context)
+    override_params = LaunchConfiguration('nav2_overrides_file').perform(context)
+    use_ground_truth_localization = (
+        LaunchConfiguration('use_ground_truth_localization').perform(context).lower() == 'true')
 
     with open(src_params, 'r', encoding='utf-8') as f:
         params = yaml.safe_load(f) or {}
+
+    if override_params and os.path.exists(override_params):
+        with open(override_params, 'r', encoding='utf-8') as f:
+            override_data = yaml.safe_load(f) or {}
+        _deep_merge_dicts(params, override_data)
+
+    if use_ground_truth_localization:
+        gt_override_path = os.path.join(
+            get_package_share_directory('temizlik_navigation'),
+            'config',
+            'ground_truth_localization_overrides.yaml')
+        with open(gt_override_path, 'r', encoding='utf-8') as f:
+            gt_override_data = yaml.safe_load(f) or {}
+        _deep_merge_dicts(params, gt_override_data)
 
     bt_nav = params.setdefault('bt_navigator', {}).setdefault('ros__parameters', {})
 
@@ -68,6 +94,16 @@ def generate_launch_description():
     nav2_params_file = LaunchConfiguration('nav2_params_file')
     coverage_params_file = LaunchConfiguration('coverage_params_file')
     autostart_coverage = LaunchConfiguration('autostart_coverage')
+    world_file = LaunchConfiguration('world')
+    use_gz_gui = LaunchConfiguration('use_gz_gui')
+    x_pose = LaunchConfiguration('x_pose')
+    y_pose = LaunchConfiguration('y_pose')
+    z_pose = LaunchConfiguration('z_pose')
+    yaw = LaunchConfiguration('yaw')
+    publish_initial_pose = LaunchConfiguration('publish_initial_pose')
+    initial_pose_delay = LaunchConfiguration('initial_pose_delay')
+    nav2_start_delay = LaunchConfiguration('nav2_start_delay')
+    use_ground_truth_localization = LaunchConfiguration('use_ground_truth_localization')
 
     default_nav2_params_file = PathJoinSubstitution([
         FindPackageShare('turtlebot3_navigation2'),
@@ -85,14 +121,23 @@ def generate_launch_description():
         DeclareLaunchArgument(
             'map',
             default_value=PathJoinSubstitution([
-                FindPackageShare('turtlebot3_navigation2'),
-                'map',
+                FindPackageShare('aws_robomaker_small_warehouse_world'),
+                'maps',
+                '005',
                 'map.yaml'
             ])
         ),
         DeclareLaunchArgument(
             'nav2_params_file',
             default_value=default_nav2_params_file
+        ),
+        DeclareLaunchArgument(
+            'nav2_overrides_file',
+            default_value=PathJoinSubstitution([
+                FindPackageShare('temizlik_navigation'),
+                'config',
+                'warehouse_nav2_overrides.yaml'
+            ])
         ),
         DeclareLaunchArgument(
             'coverage_params_file',
@@ -103,6 +148,24 @@ def generate_launch_description():
             ])
         ),
         DeclareLaunchArgument('autostart_coverage', default_value='true'),
+        DeclareLaunchArgument(
+            'world',
+            default_value=PathJoinSubstitution([
+                FindPackageShare('aws_robomaker_small_warehouse_world'),
+                'worlds',
+                'small_warehouse',
+                'small_warehouse.world'
+            ])
+        ),
+        DeclareLaunchArgument('use_gz_gui', default_value='true'),
+        DeclareLaunchArgument('x_pose', default_value='-3.071'),
+        DeclareLaunchArgument('y_pose', default_value='3.583'),
+        DeclareLaunchArgument('z_pose', default_value='0.12'),
+        DeclareLaunchArgument('yaw', default_value='0.0'),
+        DeclareLaunchArgument('publish_initial_pose', default_value='true'),
+        DeclareLaunchArgument('initial_pose_delay', default_value='3.0'),
+        DeclareLaunchArgument('nav2_start_delay', default_value='5.0'),
+        DeclareLaunchArgument('use_ground_truth_localization', default_value='false'),
         OpaqueFunction(function=_prepare_bt_params),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
@@ -119,6 +182,16 @@ def generate_launch_description():
                 'nav2_params_file': LaunchConfiguration('merged_nav2_params_file'),
                 'coverage_params_file': coverage_params_file,
                 'autostart_coverage': autostart_coverage,
+                'world': world_file,
+                'use_gz_gui': use_gz_gui,
+                'x_pose': x_pose,
+                'y_pose': y_pose,
+                'z_pose': z_pose,
+                'yaw': yaw,
+                'publish_initial_pose': publish_initial_pose,
+                'initial_pose_delay': initial_pose_delay,
+                'nav2_start_delay': nav2_start_delay,
+                'use_ground_truth_localization': use_ground_truth_localization,
             }.items()
         ),
     ])

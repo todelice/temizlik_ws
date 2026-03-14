@@ -21,6 +21,9 @@
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>launch</exec_depend>
   <exec_depend>launch_ros</exec_depend>
+  <exec_depend>aws_robomaker_small_warehouse_world</exec_depend>
+  <exec_depend>ros_gz_sim</exec_depend>
+  <exec_depend>ros_gz_bridge</exec_depend>
   <exec_depend>nav2_msgs</exec_depend>
   <exec_depend>opennav_coverage_msgs</exec_depend>
   <exec_depend>nav_msgs</exec_depend>
@@ -37,6 +40,8 @@
   <exec_depend>visualization_msgs</exec_depend>
   <exec_depend>turtlebot3_gazebo</exec_depend>
   <exec_depend>turtlebot3_navigation2</exec_depend>
+  <exec_depend>tf2_msgs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
