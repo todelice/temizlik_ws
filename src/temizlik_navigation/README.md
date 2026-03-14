@@ -126,6 +126,19 @@ ros2 action send_goal /navigate_complete_coverage opennav_coverage_msgs/action/N
 "{frame_id: map, polygons: [{points: [{x: -1.47, y: 1.53, z: 0.0}, {x: 1.66, y: 1.35, z: 0.0}, {x: 1.68, y: -1.68, z: 0.0}, {x: -1.61, y: -1.56, z: 0.0}, {x: -1.47, y: 1.53, z: 0.0}]}]}" --feedback
 ```
 
+## Launch Demo-Style Coverage In Warehouse
+
+This launch follows the upstream `opennav_coverage_demo` pattern, but keeps the
+workspace TurtleBot3 burger, the AWS warehouse world / map, and the full Nav2 stack
+so normal navigation actions still work alongside coverage.
+
+```bash
+ros2 launch temizlik_navigation turtlebot3_opennav_coverage_demo_warehouse.launch.py
+```
+
+It uses the coverage-demo RViz config and demo-style controller / BT defaults from:
+`config/opennav_coverage_demo_warehouse_nav2_overrides.yaml`
+
 ## Optional model selection
 
 ```bash

@@ -61,6 +61,7 @@ install(
     scripts/gazebo_ground_truth_tf.py
     scripts/initial_pose_publisher.py
     scripts/opennav_coverage_waypoint_node.py
+    scripts/coverage_with_obstacle_avoidance.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
