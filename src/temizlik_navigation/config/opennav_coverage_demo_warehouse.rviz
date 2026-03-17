@@ -254,6 +254,19 @@ Visualization Manager:
             Filter size: 10
           Namespaces:
             "": true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: Coverage Markers
+      Namespaces:
+        outer: true
+        voids: true
+        swaths: true
+      Topic:
+        Value: /coverage_markers
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48

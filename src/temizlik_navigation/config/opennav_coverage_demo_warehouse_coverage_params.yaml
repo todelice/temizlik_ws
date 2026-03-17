@@ -3,7 +3,7 @@ coverage_server:
     use_sim_time: true
     default_headland_width: 0.25
     robot_width: 0.306
-    operation_width: 0.30
+    operation_width: 0.20
     min_turning_radius: 0.25
     linear_curv_change: 120.0
     coordinates_in_cartesian_frame: true
