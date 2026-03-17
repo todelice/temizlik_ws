@@ -29,7 +29,7 @@ from nav_msgs.msg import OccupancyGrid, Path
 from std_msgs.msg import ColorRGBA
 from visualization_msgs.msg import Marker, MarkerArray
 
-from nav2_msgs.action import FollowPath, NavigateToPose
+from nav2_msgs.action import ComputePathToPose, FollowPath
 from opennav_coverage_msgs.action import ComputeCoveragePath
 from opennav_coverage_msgs.msg import Coordinate, Coordinates
 
@@ -152,8 +152,8 @@ class CoverageWithObstacleAvoidance(Node):
 
         self._compute_client = ActionClient(
             self, ComputeCoveragePath, 'compute_coverage_path')
-        self._nav_client = ActionClient(
-            self, NavigateToPose, 'navigate_to_pose')
+        self._planner_client = ActionClient(
+            self, ComputePathToPose, 'compute_path_to_pose')
         self._follow_client = ActionClient(
             self, FollowPath, 'follow_path')
         self._marker_pub = self.create_publisher(
@@ -282,30 +282,48 @@ class CoverageWithObstacleAvoidance(Node):
     # ── action helpers ────────────────────────────────────────────────────────
 
     def _navigate_to(self, x, y, yaw=0.0) -> bool:
-        """Navigate to (x, y, yaw) using the global planner."""
-        goal = NavigateToPose.Goal()
-        goal.pose.header.frame_id = 'map'
-        goal.pose.pose.position.x = float(x)
-        goal.pose.pose.position.y = float(y)
-        goal.pose.pose.orientation = _yaw_to_quat(yaw)
+        """Navigate to (x, y, yaw) using planner + follow_path directly.
 
-        self._nav_client.wait_for_server()
-        fut = self._nav_client.send_goal_async(goal)
+        Bypasses bt_navigator entirely to avoid recovery spin/wait loops
+        that get triggered near obstacles.
+        """
+        # Step 1: ask the planner server for an obstacle-aware path
+        plan_goal = ComputePathToPose.Goal()
+        plan_goal.goal.header.frame_id = 'map'
+        plan_goal.goal.pose.position.x = float(x)
+        plan_goal.goal.pose.position.y = float(y)
+        plan_goal.goal.pose.orientation = _yaw_to_quat(yaw)
+        plan_goal.planner_id = 'GridBased'
+
+        self._planner_client.wait_for_server()
+        fut = self._planner_client.send_goal_async(plan_goal)
         rclpy.spin_until_future_complete(self, fut)
         gh = fut.result()
         if not gh.accepted:
-            self.get_logger().error(
-                f'navigate_to_pose rejected for ({x:.2f}, {y:.2f})')
+            self.get_logger().warn(
+                f'ComputePathToPose rejected for ({x:.2f}, {y:.2f})')
             return False
         res_fut = gh.get_result_async()
-        rclpy.spin_until_future_complete(self, res_fut)
-        ok = res_fut.result().status == GoalStatus.STATUS_SUCCEEDED
-        if not ok:
+        rclpy.spin_until_future_complete(self, res_fut, timeout_sec=10.0)
+        if not res_fut.done():
             self.get_logger().warn(
-                f'navigate_to_pose failed for ({x:.2f}, {y:.2f})')
-        return ok
+                f'ComputePathToPose timed out for ({x:.2f}, {y:.2f})')
+            gh.cancel_goal_async()
+            return False
+        plan_result = res_fut.result()
+        if plan_result.status != GoalStatus.STATUS_SUCCEEDED:
+            self.get_logger().warn(
+                f'No path found to ({x:.2f}, {y:.2f})')
+            return False
 
-    def _follow_path(self, path: Path) -> bool:
+        path = plan_result.result.path
+        if not path.poses:
+            return False
+
+        # Step 2: follow the computed path with the controller
+        return self._follow_path(path)
+
+    def _follow_path(self, path: Path, timeout_sec=60.0) -> bool:
         """Follow a nav_msgs/Path with the controller directly."""
         goal = FollowPath.Goal()
         goal.path = path
@@ -320,7 +338,12 @@ class CoverageWithObstacleAvoidance(Node):
             self.get_logger().error('follow_path rejected')
             return False
         res_fut = gh.get_result_async()
-        rclpy.spin_until_future_complete(self, res_fut)
+        rclpy.spin_until_future_complete(self, res_fut, timeout_sec=timeout_sec)
+        if not res_fut.done():
+            self.get_logger().warn(
+                f'follow_path timed out after {timeout_sec:.0f}s — cancelling')
+            gh.cancel_goal_async()
+            return False
         ok = res_fut.result().status == GoalStatus.STATUS_SUCCEEDED
         if not ok:
             self.get_logger().warn('follow_path did not succeed')
@@ -459,29 +482,53 @@ class CoverageWithObstacleAvoidance(Node):
         self._publish_markers(unique_pts, void_pts_list, swaths)
 
         # 6. Execute: navigate_to_pose (planner) → follow_path (controller)
-        #    for each swath, inter-swath moves use the global planner so they
-        #    automatically route around obstacles.
-        APPROACH_M = 0.40   # run-up distance before swath start
+        #    For each swath, pick whichever end is closer to where the robot
+        #    currently is (greedy nearest-end) so we always travel the short
+        #    distance to the next swath instead of crossing the whole field.
+        APPROACH_M = 0.20   # run-up distance before swath start
+
+        # Seed with the robot's approximate current position (swath 0 start)
+        prev_ex = float(swaths[0].start.x)
+        prev_ey = float(swaths[0].start.y)
 
         for i, swath in enumerate(swaths):
-            s = swath.start
-            e = swath.end
-            yaw = math.atan2(e.y - s.y, e.x - s.x)
+            sa, ea = swath.start, swath.end   # as reported by coverage server
+
+            # Choose the end closer to where we just finished (nearest-end)
+            d_to_start = math.hypot(float(sa.x) - prev_ex,
+                                    float(sa.y) - prev_ey)
+            d_to_end   = math.hypot(float(ea.x) - prev_ex,
+                                    float(ea.y) - prev_ey)
+
+            if d_to_end < d_to_start:
+                s, e = ea, sa   # traverse in reverse
+            else:
+                s, e = sa, ea
+
+            yaw = math.atan2(float(e.y) - float(s.y),
+                             float(e.x) - float(s.x))
             cx, cy = math.cos(yaw), math.sin(yaw)
 
-            # Navigate to the approach point (behind swath start) so the
-            # robot arrives already aligned — prevents heading-correction flailing.
+            self.get_logger().info(
+                f'[{i+1}/{len(swaths)}] swath '
+                f'({s.x:.2f},{s.y:.2f})→({e.x:.2f},{e.y:.2f})')
+
+            # Try approach point first; fall back to swath start if blocked
             ax = float(s.x) - APPROACH_M * cx
             ay = float(s.y) - APPROACH_M * cy
-            self.get_logger().info(
-                f'[{i+1}/{len(swaths)}] Navigating to approach point '
-                f'({ax:.2f}, {ay:.2f}) yaw={math.degrees(yaw):.0f}°...')
-            self._navigate_to(ax, ay, yaw)
+            if not self._navigate_to(ax, ay, yaw):
+                self.get_logger().warn(
+                    f'[{i+1}] Approach point blocked, trying swath start...')
+                if not self._navigate_to(float(s.x), float(s.y), yaw):
+                    self.get_logger().warn(
+                        f'[{i+1}] Cannot reach swath, skipping.')
+                    continue
 
-            self.get_logger().info(
-                f'[{i+1}/{len(swaths)}] Following swath...')
-            path = _make_swath_path(s, e)
-            self._follow_path(path)
+            if not self._follow_path(_make_swath_path(s, e)):
+                self.get_logger().warn(
+                    f'[{i+1}] Swath follow failed, continuing to next.')
+
+            prev_ex, prev_ey = float(e.x), float(e.y)
 
         self.get_logger().info('Coverage complete.')
 

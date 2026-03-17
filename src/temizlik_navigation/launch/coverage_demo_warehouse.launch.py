@@ -291,7 +291,9 @@ def generate_launch_description():
     ld.add_action(DeclareLaunchArgument('y_pose', default_value='3.583'))
     ld.add_action(DeclareLaunchArgument(
         'coverage_params_file',
-        default_value=os.path.join(coverage_demo_dir, 'demo_params.yaml'),
+        default_value=os.path.join(
+            temizlik_nav_dir, 'config',
+            'opennav_coverage_demo_warehouse_coverage_params.yaml'),
     ))
     ld.add_action(DeclareLaunchArgument(
         'nav2_overrides_file',
